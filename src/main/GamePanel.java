@@ -143,8 +143,10 @@ public class GamePanel extends JPanel implements Runnable{
             if(mouseX >= square.getX() && mouseX < (square.getX() + Board.SQUARE_SIZE) &&
                     mouseY >= square.getY() && mouseY < (square.getY() + Board.SQUARE_SIZE))
             {
-                System.out.println("Mouse in: " + square.getLabel() + "\nOn piece: " + square.getCurrentPiece());
-                return square.getCurrentPiece();
+                if(square.getCurrentPiece() != null){
+                    System.out.println("Mouse in: " + square.getLabel() + "\nOn piece: " + square.getCurrentPiece());
+                    return square.getCurrentPiece();
+                }
             }
         }
         return null;
