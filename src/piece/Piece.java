@@ -47,6 +47,18 @@ public class Piece {
         }
     }
 
+    Square getSquare(String label){
+        for(Square square: Board.squares){
+            if(Objects.equals(square.getLabel(), label)){
+                return square;
+            }
+        }
+        return null;
+    }
+
+    public boolean validMove(String targetPos){
+        return false;
+    }
 
     public void draw(Graphics2D g2){
         if(simulating){

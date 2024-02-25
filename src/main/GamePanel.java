@@ -7,6 +7,7 @@ import piece.*;
 import javax.swing.JPanel;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class GamePanel extends JPanel implements Runnable{
     public static final int WIDTH = 1100;
@@ -24,6 +25,7 @@ public class GamePanel extends JPanel implements Runnable{
     public static final int WHITE = 0;
     public static final int BLACK = 1;
     int currentColor = WHITE;
+    String previousSquare;
 
     public GamePanel(){
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -122,7 +124,12 @@ public class GamePanel extends JPanel implements Runnable{
         if(mouse.pressed == false){
             if(activeP != null){
                 activeP.simulating = false;
-                activeP.position = getHoveredLocation();
+                previousSquare = activeP.position;
+
+                if(activeP.validMove(getHoveredLocation())){
+                    activeP.position = getHoveredLocation();
+                    freePrevSquare(previousSquare);
+                }
                 activeP = null;
             }
         }
@@ -135,6 +142,15 @@ public class GamePanel extends JPanel implements Runnable{
         activeP.y = mouse.y - Board.HALF_SQUARE_SIZE;
     }
 
+    private void freePrevSquare(String label){
+        System.out.println("Freeing previous square: " + label);
+        for(Square square: Board.squares){
+            if(Objects.equals(square.getLabel(), label)){
+                square.setCurrentPiece(null);
+            }
+        }
+    }
+
     private Piece mouseOnPiece(){
         int mouseX = mouse.x;
         int mouseY = mouse.y;
@@ -144,7 +160,7 @@ public class GamePanel extends JPanel implements Runnable{
                     mouseY >= square.getY() && mouseY < (square.getY() + Board.SQUARE_SIZE))
             {
                 if(square.getCurrentPiece() != null){
-                    System.out.println("Mouse in: " + square.getLabel() + "\nOn piece: " + square.getCurrentPiece());
+                    System.out.println("Mouse in: " + square.getLabel() + " On piece: " + square.getCurrentPiece());
                     return square.getCurrentPiece();
                 }
             }
@@ -175,7 +191,7 @@ public class GamePanel extends JPanel implements Runnable{
             if(mouseX >= square.getX() && mouseX < (square.getX() + Board.SQUARE_SIZE) &&
                     mouseY >= square.getY() && mouseY < (square.getY() + Board.SQUARE_SIZE))
             {
-                System.out.println("Mouse in: " + square.getLabel());
+                //System.out.println("Mouse in: " + square.getLabel());
                 return square;
             }
         }
