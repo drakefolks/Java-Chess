@@ -122,7 +122,7 @@ public class GamePanel extends JPanel implements Runnable{
         if(mouse.pressed == false){
             if(activeP != null){
                 activeP.simulating = false;
-                activeP.position = getHoveredSquare();
+                activeP.position = getHoveredLocation();
                 activeP = null;
             }
         }
@@ -150,7 +150,7 @@ public class GamePanel extends JPanel implements Runnable{
         return null;
     }
 
-    private String getHoveredSquare(){
+    private String getHoveredLocation(){
         int mouseX = mouse.x;
         int mouseY = mouse.y;
 
@@ -160,6 +160,21 @@ public class GamePanel extends JPanel implements Runnable{
             {
                 System.out.println("Mouse in: " + square.getLabel());
                 return square.getLabel();
+            }
+        }
+        return null;
+    }
+
+    private Square getHoveredSquare(){
+        int mouseX = mouse.x;
+        int mouseY = mouse.y;
+
+        for(Square square : Board.squares){
+            if(mouseX >= square.getX() && mouseX < (square.getX() + Board.SQUARE_SIZE) &&
+                    mouseY >= square.getY() && mouseY < (square.getY() + Board.SQUARE_SIZE))
+            {
+                System.out.println("Mouse in: " + square.getLabel());
+                return square;
             }
         }
         return null;
@@ -176,6 +191,19 @@ public class GamePanel extends JPanel implements Runnable{
         // PIECES
         for(Piece p: simPieces){
             p.draw(g2);
+        }
+
+        // Drawing simulated moves
+        if(activeP != null){
+            g2.setColor(Color.BLUE);
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.7f));
+            Square square = getHoveredSquare();
+            if(square != null){
+                g2.fillRect(square.getX(), square.getY(), Board.SQUARE_SIZE, Board.SQUARE_SIZE);
+                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+
+                activeP.draw(g2);
+            }
         }
     }
 }
