@@ -53,7 +53,7 @@ public class Board {
                 g2.drawString(notation, getX(col) + 5, getY(row) + 15);
 
                 if(squares.size() < 64){
-                    squares.add(new Square(getX(col), getY(row), notation, null));
+                    squares.add(new Square(getX(col), getY(row), row, col, notation, null));
                 }
 
                 squareCNT++;

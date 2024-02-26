@@ -121,7 +121,7 @@ public class GamePanel extends JPanel implements Runnable{
             }
         }
 
-        if(mouse.pressed == false){
+        if(!mouse.pressed){
             if(activeP != null){
                 activeP.simulating = false;
                 previousSquare = activeP.position;

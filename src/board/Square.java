@@ -5,15 +5,10 @@ import piece.Piece;
 public class Square {
     int x;
     int y;
+    int row;
+    int col;
     String label;
     Piece currentPiece;
-
-    public Square(int x, int y, String label, Piece currentPiece) {
-        this.x = x;
-        this.y = y;
-        this.label = label;
-        this.currentPiece = currentPiece;
-    }
 
     public int getX() {
         return x;
@@ -31,6 +26,22 @@ public class Square {
         this.y = y;
     }
 
+    public int getRow() {
+        return row;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public int getCol() {
+        return col;
+    }
+
+    public void setCol(int col) {
+        this.col = col;
+    }
+
     public String getLabel() {
         return label;
     }
@@ -44,6 +55,15 @@ public class Square {
     }
 
     public void setCurrentPiece(Piece currentPiece) {
+        this.currentPiece = currentPiece;
+    }
+
+    public Square(int x, int y, int row, int col, String label, Piece currentPiece) {
+        this.x = x;
+        this.y = y;
+        this.row = row;
+        this.col = col;
+        this.label = label;
         this.currentPiece = currentPiece;
     }
 }
